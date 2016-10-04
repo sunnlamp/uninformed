@@ -22,5 +22,6 @@ public class Test {
     BFS bfs = new BFS();
 
     bfs.breadthFirstSearch(A, G);
+    bfs.depthFirstSearch(A, F);
   }
 }

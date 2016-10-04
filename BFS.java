@@ -4,51 +4,68 @@ import java.util.ArrayList;
 
 public class BFS {
 
-  ArrayList<Node> Path = new ArrayList<Node>();
+  ArrayList<Node> path = new ArrayList<Node>();
 
   public void breadthFirstSearch(Node startNode, Node endNode) {
-    ArrayList<Node> OpenList = new ArrayList<Node>();
-    ArrayList<Node> ClosedList = new ArrayList<Node>();
+    ArrayList<Node> openList = new ArrayList<Node>();
+    ArrayList<Node> closedList = new ArrayList<Node>();
 
-    OpenList.add(startNode);
+    openList.add(startNode);
     Node currNode;
 
-    while (OpenList.size() > 0) {
-      currNode = OpenList.get(0);
-      ClosedList.add(currNode);
-      OpenList.remove(0);
+    while (openList.size() > 0) {
+      currNode = openList.get(0);
+      closedList.add(currNode);
+      openList.remove(0);
 
       if (currNode.adjacents.size() > 0) {
         for (int i = 0; i < currNode.adjacents.size(); i++) {
           currNode.adjacents.get(i).parentNode = currNode;
-          OpenList.add(currNode.adjacents.get(i));
+          openList.add(currNode.adjacents.get(i));
           if (currNode.adjacents.get(i) == endNode) {
             backTrack(startNode, endNode);
           }
         }
       }
-
     }
 
   }
 
   public void depthFirstSearch(Node startNode, Node endNode) {
+    ArrayList<Node> openList = new ArrayList<Node>();
 
+    openList.add(startNode);
+    Node currNode;
+
+    while (openList.size() > 0) {
+      currNode = openList.get(openList.size() - 1);
+      openList.remove(openList.size() - 1);
+      if (currNode.adjacents.size() > 0) {
+        for (int i = 0; i < currNode.adjacents.size(); i++) {
+          currNode.adjacents.get(i).parentNode = currNode;
+          if (currNode.adjacents.get(i) == endNode) {
+            backTrack(startNode, endNode);
+            return;
+          }
+          openList.add(currNode.adjacents.get(i));
+        }
+      }
+    }
   }
 
   void backTrack(Node startNode, Node endNode) {
     Node n = endNode;
 
     while(n != startNode) {
-      Path.add(n);
+      path.add(n);
       n = n.parentNode;
     }
 
-    Path.add(startNode); //appends the startNode to the Path list
+    path.add(startNode); //appends the startNode to the Path list
 
     System.out.println("Path: ");
-    for (int i = 0; i < Path.size(); i++) {
-      System.out.println(Path.get(i).name);
+    for (int i = 0; i < path.size(); i++) {
+      System.out.println(path.get(i).name);
     }
   }
 
