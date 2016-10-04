@@ -11,10 +11,25 @@ public class BFS {
     ArrayList<Node> ClosedList = new ArrayList<Node>();
 
     OpenList.add(startNode);
+    Node currNode;
 
     while (OpenList.size() > 0) {
+      currNode = OpenList.get(0);
+      ClosedList.add(currNode);
+      OpenList.remove(0);
+
+      if (currNode.adjacents.size() > 0) {
+        for (int i = 0; i < currNode.adjacents.size(); i++) {
+          currNode.adjacents.get(i).parentNode = currNode;
+          OpenList.add(currNode.adjacents.get(i));
+          if (currNode.adjacents.get(i) == endNode) {
+            backTrack(startNode, endNode);
+          }
+        }
+      }
 
     }
+
   }
 
   public void depthFirstSearch(Node startNode, Node endNode) {
@@ -36,5 +51,5 @@ public class BFS {
       System.out.println(Path.get(i).name);
     }
   }
-  
+
 }
